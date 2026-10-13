@@ -6,9 +6,11 @@ import streamlit as st
 
 import database as db
 from auth import require_password
+from session import init_session
 
 st.set_page_config(page_title="Application Tracker", page_icon="📌", layout="wide")
 require_password()
+init_session()
 db.init_db()
 
 ICONS = {"Saved": "📌", "Applied": "📨", "Interview": "🗣️", "Offer": "🎉", "Rejected": "❌"}

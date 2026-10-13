@@ -16,6 +16,7 @@ from config import (
 )
 from auth import require_password
 from job_agent import analyze
+from session import init_session, is_public_mode
 
 MAX_BYTES = MAX_FILE_MB * 1024 * 1024
 RECOMMENDATIONS = ["APPLY", "APPLY WITH RESUME CHANGES", "LOW MATCH"]
@@ -33,6 +34,7 @@ TABLE_COLUMNS = [
 
 st.set_page_config(page_title="CV ↔ Job Matcher", page_icon="🎯", layout="wide")
 require_password()
+init_session()
 
 
 # ==============================
@@ -88,6 +90,16 @@ with st.sidebar:
     )
     jd_uploads = jd_uploads or []
 
+    public = is_public_mode()
+    api_key = ""
+    if public:
+        api_key = st.text_input(
+            "Your Gemini API key",
+            type="password",
+            help="Used only for your analyses in this session. It is never stored.",
+        )
+        st.caption("No key? Get a free one at aistudio.google.com/apikey")
+
     force = st.checkbox(
         "Re-analyze even if already done",
         help="By default, a CV + job pair that was analyzed before is reused without calling Gemini.",
@@ -102,7 +114,7 @@ with st.sidebar:
     if too_many:
         st.error(f"Please upload at most {MAX_JOBS_PER_RUN} job descriptions at a time.")
 
-    ready = bool(cv_upload and jd_uploads) and not too_big and not too_many
+    ready = bool(cv_upload and jd_uploads) and not too_big and not too_many and (bool(api_key) or not public)
     run = st.button("Analyze", type="primary", width="stretch", disabled=not ready)
 
     st.divider()
@@ -118,6 +130,11 @@ with st.sidebar:
 
 st.title("🎯 CV ↔ Job Matcher")
 st.caption("Upload your CV and one or more job descriptions to see how well you match.")
+if public:
+    st.info(
+        "Public demo: paste your own free Gemini API key in the sidebar to start. "
+        "Your results are private to this browser session and are lost when you reload the page."
+    )
 
 if run:
     errors = []
@@ -130,7 +147,7 @@ if run:
             progress.progress((i - 1) / total, text=f"Analyzing {jd.name} ({i}/{total})")
             try:
                 jd_path = save_upload(jd, tmp)
-                row = analyze(jd_path, cv_path, force=force)
+                row = analyze(jd_path, cv_path, force=force, api_key=api_key or None)
                 reused += int(row["cached"])
             except Exception as e:
                 logger.error("Failed on %s: %s", jd.name, e)

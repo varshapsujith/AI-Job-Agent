@@ -11,6 +11,7 @@ View
 Only hashes and names are stored, never the full CV or job text.
 """
 
+import contextvars
 import logging
 import sqlite3
 from contextlib import contextmanager
@@ -20,6 +21,20 @@ import pandas as pd
 from config import DB_FILE
 
 logger = logging.getLogger("jobmatcher.db")
+
+# Which database file to use. By default DB_FILE; the public deployment points each
+# visitor's session at its own file (see session.py). A context variable keeps
+# concurrent visitors apart.
+_db_override = contextvars.ContextVar("db_override", default=None)
+
+
+def use_db(path) -> None:
+    """Use this database file for the current session."""
+    _db_override.set(str(path))
+
+
+def current_db_file() -> str:
+    return _db_override.get() or DB_FILE
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS cvs (
@@ -150,7 +165,7 @@ NUMERIC_COLUMNS = {"ID", "Match Score", "Skills Score", "Experience Score", "Too
 
 @contextmanager
 def get_conn():
-    conn = sqlite3.connect(DB_FILE)
+    conn = sqlite3.connect(current_db_file())
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
     try:
@@ -169,7 +184,7 @@ def init_db() -> None:
 
 
 def _frame(sql: str, params: tuple = ()) -> pd.DataFrame:
-    conn = sqlite3.connect(DB_FILE)
+    conn = sqlite3.connect(current_db_file())
     try:
         df = pd.read_sql_query(sql, conn, params=params)
     finally:

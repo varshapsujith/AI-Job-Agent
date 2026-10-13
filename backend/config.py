@@ -3,6 +3,7 @@
 # --- Model ---
 MODEL = "gemini-3.5-flash-lite"
 MAX_RETRIES = 3
+RATE_LIMIT_WAIT_SECONDS = 20  # wait before retrying after a 429 (rate limit) error
 
 # --- Input safety ---
 ALLOWED_TYPES = ["pdf", "docx", "txt"]

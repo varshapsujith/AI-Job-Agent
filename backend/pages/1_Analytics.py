@@ -4,10 +4,12 @@ import streamlit as st
 
 import database as db
 from auth import require_password
+from session import init_session
 from config import EXPERIENCE_MAX, SKILLS_MAX, TOOLS_MAX
 
 st.set_page_config(page_title="Analytics", page_icon="📊", layout="wide")
 require_password()
+init_session()
 db.init_db()
 
 ALL_CVS = "All CVs"

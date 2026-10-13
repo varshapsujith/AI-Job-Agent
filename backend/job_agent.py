@@ -18,6 +18,7 @@ from config import (
     MAX_RETRIES,
     MODEL,
     PROMPT_VERSION,
+    RATE_LIMIT_WAIT_SECONDS,
     SKILLS_MAX,
     TOOLS_MAX,
 )
@@ -25,8 +26,12 @@ from verification import verify_skills
 
 load_dotenv()
 
-client = genai.Client()
 logger = logging.getLogger("jobmatcher.agent")
+
+
+def get_client(api_key: str | None = None) -> genai.Client:
+    """Use the visitor's own key when given, otherwise the key from .env / the environment."""
+    return genai.Client(api_key=api_key) if api_key else genai.Client()
 
 
 # ==============================
@@ -114,7 +119,15 @@ JOB DESCRIPTION:
 """
 
 
-def analyze_job(job_description: str, resume_text: str) -> MatchResult:
+def analyze_job(job_description: str, resume_text: str, api_key: str | None = None) -> MatchResult:
+    try:
+        client = get_client(api_key)
+    except ValueError:
+        raise ValueError(
+            "No Gemini API key found. Add GEMINI_API_KEY to your .env file, "
+            "or paste your key in the sidebar."
+        ) from None
+
     prompt = build_prompt(job_description, resume_text)
     config = types.GenerateContentConfig(
         temperature=0,
@@ -133,10 +146,22 @@ def analyze_job(job_description: str, resume_text: str) -> MatchResult:
                 result = MatchResult.model_validate_json(response.text)
             return result
         except Exception as e:  # API error, rate limit, bad JSON...
+            text = str(e)
+            # Errors that retrying cannot fix: fail straight away with a clear message
+            if "API key not valid" in text or "API_KEY_INVALID" in text:
+                raise ValueError("The Gemini API key was rejected. Check that it was copied correctly.") from None
+            if "PerDay" in text:
+                raise RuntimeError(
+                    "The daily Gemini quota for this key and model is used up. "
+                    "Try again tomorrow, or switch the model."
+                ) from None
+
             last_error = e
+            rate_limited = "429" in text or "RESOURCE_EXHAUSTED" in text
             logger.warning("Gemini attempt %d/%d failed: %s", attempt, MAX_RETRIES, e)
             if attempt < MAX_RETRIES:
-                time.sleep(2 ** (attempt - 1))  # wait 1s, then 2s
+                # a per-minute limit needs a longer pause than an ordinary hiccup
+                time.sleep(RATE_LIMIT_WAIT_SECONDS if rate_limited else 2 ** (attempt - 1))
 
     raise RuntimeError(f"Gemini failed after {MAX_RETRIES} attempts: {last_error}")
 
@@ -153,7 +178,7 @@ def recommendation_for(score: int) -> str:
 # 4. MAIN ENTRY POINT
 # ==============================
 
-def analyze(jd_file, cv_file, force: bool = False) -> dict:
+def analyze(jd_file, cv_file, force: bool = False, api_key: str | None = None) -> dict:
     """Compare one JD with one CV and store the result in the database.
 
     If the same CV text and job text were already analyzed (same model and
@@ -186,7 +211,7 @@ def analyze(jd_file, cv_file, force: bool = False) -> dict:
             return row
 
     logger.info("Analyzing %s", jd_name)
-    result = analyze_job(job_description, resume_text)
+    result = analyze_job(job_description, resume_text, api_key)
 
     skills = clamp(result.skills_score, 0, SKILLS_MAX)
     experience = clamp(result.experience_score, 0, EXPERIENCE_MAX)
