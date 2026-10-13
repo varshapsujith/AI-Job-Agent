@@ -1,0 +1,9 @@
+﻿"""Check the model's skill claims against the actual CV text."""
+streamlit
+pandas
+pydantic
+pypdf
+python-docx
+python-dotenv
+google-genai
+
