@@ -1,0 +1,115 @@
+:host {
+  --ink: #17212b;
+  --muted: #5d6b79;
+  --line: #d9e0e7;
+  --bg: #f5f7f9;
+  --panel: #ffffff;
+  --accent: #1f5f8b;
+  --have: #1d7a5a;
+  --have-bg: #e3f3ec;
+  --miss: #a8402f;
+  --miss-bg: #f9e8e4;
+  --mid: #b27a12;
+  display: block;
+  height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+}
+
+/* Full-screen layout: header + uploads on top, results table fills the rest */
+main {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+header { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+h1 { font-size: 1.5rem; margin: 0; letter-spacing: -0.01em; }
+header p { color: var(--muted); margin: 0; }
+
+.uploads {
+  display: grid; gap: 0.75rem; align-items: stretch;
+  grid-template-columns: 1fr 1fr auto;
+}
+.slot, .go {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+  padding: 0.75rem 1rem;
+  display: flex; flex-direction: column; gap: 0.4rem; align-items: flex-start;
+}
+.slot h2 { font-size: 0.95rem; margin: 0; }
+.filename { margin: 0; color: var(--muted); word-break: break-all; }
+.filelist {
+  margin: 0; padding-left: 1.1rem; color: var(--muted); word-break: break-all;
+  max-height: 4.5rem; overflow-y: auto; /* long file lists scroll instead of pushing the table down */
+}
+.go { justify-content: center; align-items: center; }
+.go small { color: var(--muted); }
+@media (max-width: 800px) { .uploads { grid-template-columns: 1fr; } }
+
+.btn {
+  display: inline-block; cursor: pointer;
+  background: var(--accent); color: #fff;
+  border: 1px solid var(--accent); border-radius: 6px;
+  padding: 0.5rem 1.1rem; font: inherit; font-weight: 600;
+}
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn:disabled { opacity: 0.6; cursor: progress; }
+.btn:focus-visible, .sort:focus-visible, .link:focus-visible { outline: 3px solid #8fc1e3; outline-offset: 2px; }
+
+.error {
+  margin: 0; padding: 0.6rem 1rem;
+  background: var(--miss-bg); color: var(--miss);
+  border-radius: 6px;
+}
+.empty { margin: 2rem 0 0; color: var(--muted); text-align: center; }
+
+/* Results table: takes all remaining screen height and width, scrolls inside itself */
+.table-wrap {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+}
+table { width: 100%; min-width: 900px; border-collapse: collapse; table-layout: fixed; }
+th, td { text-align: left; padding: 0.8rem 0.9rem; vertical-align: top; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+th {
+  position: sticky; top: 0; z-index: 1;
+  font-size: 0.85rem; color: var(--muted); font-weight: 600; background: #fafbfc;
+  box-shadow: 0 1px 0 var(--line);
+}
+tbody tr:last-child td { border-bottom: 0; }
+
+/* column widths add up to 100% so the table uses the full screen width */
+th:nth-child(1) { width: 12%; }
+th:nth-child(2) { width: 9%; }
+th:nth-child(3) { width: 11%; }
+th:nth-child(4) { width: 16%; }
+th:nth-child(5) { width: 16%; }
+th:nth-child(6) { width: 14%; }
+th:nth-child(7) { width: 22%; }
+
+.job { font-weight: 600; }
+.sort { all: unset; cursor: pointer; font-weight: 600; }
+
+.score span { font-weight: 700; font-variant-numeric: tabular-nums; font-size: 1.05rem; }
+.score i { display: block; height: 5px; border-radius: 3px; margin-top: 4px; background: currentColor; }
+.score.high { color: var(--have); }
+.score.mid { color: var(--mid); }
+.score.low { color: var(--miss); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.chip { font-size: 0.8rem; padding: 0.1rem 0.5rem; border-radius: 999px; }
+.chip.have { background: var(--have-bg); color: var(--have); }
+.chip.miss { background: var(--miss-bg); color: var(--miss); }
+
+.sugg p { margin: 0; }
+.sugg p.clamped {
+  display: -webkit-box; -webkit-line-clamp: 8; -webkit-box-orient: vertical; overflow: hidden;
+}
+.link { all: unset; cursor: pointer; color: var(--accent); font-size: 0.85rem; margin-top: 0.25rem; }
+.link:hover { text-decoration: underline; }

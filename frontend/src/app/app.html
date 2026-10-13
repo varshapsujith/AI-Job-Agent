@@ -1,0 +1,102 @@
+<main>
+  <header>
+    <h1>Job match</h1>
+    <p>Upload one or more job descriptions and your CV to see how well they match.</p>
+  </header>
+
+  <section class="uploads">
+    <div class="slot">
+      <h2>Job descriptions</h2>
+      <input id="jd" type="file" multiple accept=".pdf,.docx,.txt" (change)="pickJds($event)" hidden />
+      @if (jdFiles().length === 0) {
+        <p class="filename">No files chosen</p>
+      } @else {
+        <ul class="filelist">
+          @for (f of jdFiles(); track f.name) {
+            <li>{{ f.name }}</li>
+          }
+        </ul>
+      }
+      <label for="jd" class="btn ghost">{{ jdFiles().length ? 'Change files' : 'Choose files' }}</label>
+    </div>
+
+    <div class="slot">
+      <h2>Your CV</h2>
+      <input id="cv" type="file" accept=".pdf,.docx,.txt" (change)="pickCv($event)" hidden />
+      <p class="filename">{{ cvFile()?.name ?? 'No file chosen' }}</p>
+      <label for="cv" class="btn ghost">{{ cvFile() ? 'Change file' : 'Choose file' }}</label>
+    </div>
+
+    <div class="go">
+      <button class="btn" (click)="analyze()" [disabled]="!canAnalyze()">
+        {{ loading() ? 'Analyzing ' + jdFiles().length + ' job(s)…' : 'Compare CV with jobs' }}
+      </button>
+      <small>PDF, DOCX or TXT</small>
+    </div>
+  </section>
+
+  @if (error()) {
+    <p class="error" role="alert">{{ error() }}</p>
+  }
+
+  @if (results().length === 0) {
+    <p class="empty">No results yet. Choose a job description and your CV, then compare them.</p>
+  } @else {
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Job</th>
+            <th>
+              <button class="sort" (click)="sortDesc.set(!sortDesc())">
+                Match score {{ sortDesc() ? '↓' : '↑' }}
+              </button>
+            </th>
+            <th>Recommendation</th>
+            <th>Matching skills</th>
+            <th>Missing skills</th>
+            <th>Experience gap</th>
+            <th>Resume suggestions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (r of sorted(); track $index) {
+            <tr>
+              <td class="job">{{ r.job }}</td>
+              <td>
+                <div class="score {{ scoreBand(r.matchScore) }}">
+                  <span>{{ r.matchScore }}%</span>
+                  <i [style.width.%]="r.matchScore"></i>
+                </div>
+              </td>
+              <td>{{ r.recommendation }}</td>
+              <td>
+                <div class="chips">
+                  @for (s of r.matchingSkills; track s) {
+                    <span class="chip have">{{ s }}</span>
+                  }
+                </div>
+              </td>
+              <td>
+                <div class="chips">
+                  @for (s of r.missingSkills; track s) {
+                    <span class="chip miss">{{ s }}</span>
+                  }
+                </div>
+              </td>
+              <td>{{ r.experienceGap }}</td>
+              <td class="sugg">
+                <p [class.clamped]="expanded() !== $index">{{ r.resumeSuggestions }}</p>
+                @if (r.resumeSuggestions.length > 120) {
+                  <button class="link" (click)="toggle($index)">
+                    {{ expanded() === $index ? 'Show less' : 'Show more' }}
+                  </button>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</main>

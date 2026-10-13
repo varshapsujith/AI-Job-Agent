@@ -1,0 +1,66 @@
+Associate I - Data Analyst (Onboarding and Event Management)
+
+Role description
+The Data team is responsible for ensuring that all accounts and portfolios are created and maintained on our investment platform and other business data masters with the highest levels of accuracy and integrity.
+
+Key Responsibilities
+
+• Setup and maintenance of Mandate, Portfolios and other related items in Aladdin, IRIS and other Client Business Data Masters
+
+• Closing of Mandates and Portfolios within Aladdin, IRIS and other BDM’s
+
+• Perform quality assurance checks ensuring data is kept in line across different platforms
+
+• Setup and maintenance of pay away brokers, credit risk counterparties and new custodians
+
+• Review data quality control exceptions to ensure data is maintained to the highest quality based on data governance principles and agreed rules
+
+• Maintenance of Aladdin Accounting data
+
+• Closure of accounts in Aladdin and Client data masters
+
+• Trade delivery configuration and maintenance
+
+• Setup and maintenance of reports to 3rd parties
+
+• Setup of Settlement Instructions
+
+• Maintenance of our subscription and redemption cash flow notification data. • Escalate issues immediately to the Team Leader
+
+Skills and Behaviours Required
+
+• 1 - 2 years of working within a data management environment, responsible for multiple datasets across multiple platforms
+
+• Experience in Data structures required to support a process of a new account take-on and transition events
+
+• Managing a high volume of varied tasks efficiently and meeting internal and external deadlines.
+
+• Collecting, verifying, storing, and maintaining accurate operational data.
+
+• Excellent attention to detail.
+
+• A willingness to question instructions that look or seem wrong
+
+• Commitment to delivering a high-quality onboarding and offboarding experience for our clients
+
+• Previous experience working within an Asset Management firm or similar is adventagious
+
+• Ideally, previous experience of Aladdin What you’ll be like
+
+• A keen eye for detail is crucial for reviewing data and questioning anomalies
+
+• Strong organisational abilities are needed to manage multiple events simultaneously, prioritising tasks and maintaining a smooth and efficient workflow.
+
+• A motivated, committed and enthusiastic person who thrives working in a close team environment
+
+• Someone who can identify issues and suggest and help implement solutions quickly and effectively
+
+• The ability to analyse data and workflows to help improve processes and enhance the efficiency of the onboarding experience.
+
+• A proactive learner that is quick at picking up new processes • Can work on own initiative whilst ensuring the team manager is aware of what you are delivering
+
+• A resilient team member who is good at building relationships
+
+
+Skills
+Data Structures and Algorithms, Attention to Detail, Asset Management

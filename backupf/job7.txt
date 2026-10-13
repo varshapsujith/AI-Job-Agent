@@ -1,0 +1,10 @@
+Backend Software Engineer (Core Systems & APIs)
+Company Strategic Goal: Scale core transactional infrastructure, ensure high system availability, and build robust backend microservices supporting rapid user growth and real-time data processing.
+
+What the Company Expects:
+
+Design, develop, and maintain high-performance, secure backend APIs and distributed services using Python, Node.js, and SQL databases.
+
+Collaborate with product and data teams to architect scalable data pipelines, optimize database queries, and reduce system latency.
+
+Take ownership of code quality through automated testing, peer code reviews, CI/CD pipeline integration, and rigorous debugging.
