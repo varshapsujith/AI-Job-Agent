@@ -30,13 +30,17 @@ Applying to data analyst roles means reading dozens of job descriptions and gues
 - Score distribution, and where the score is weakest (skills, experience or tools)
 - Share of the model's skill claims that were confirmed in the CV text
 
+![Analytics page](https://github.com/varshapsujith/AI-Job-Agent/blob/main/docs/screenshot/Analytics%20-%20By%20Score.png?raw=true)
+![Analytics page](https://github.com/varshapsujith/AI-Job-Agent/blob/main/docs/screenshot/Analytics%20-%20By%20Skill.png?raw=true)
+![Analytics page](https://github.com/varshapsujith/AI-Job-Agent/blob/main/docs/screenshot/Analytics%20-%20Overall.png?raw=true)
+
 **Application tracker**
 - Status per job: Saved, Applied, Interview, Offer, Rejected, with dates and notes
 - Funnel, weekly activity chart and average match score by status
 
-![Analytics page](https://github.com/varshapsujith/AI-Job-Agent/blob/main/docs/screenshot/Application%20Tracker%20-%20Update%20.png?raw=true)
-![Analytics page](https://github.com/varshapsujith/AI-Job-Agent/blob/main/docs/screenshot/Application%20Tracker%20-%20Pipeline.png?raw=true)
-![Analytics page](https://github.com/varshapsujith/AI-Job-Agent/blob/main/docs/screenshot/Application%20Tracker%20-%20Funnel.png?raw=true)
+![Tracker page](https://github.com/varshapsujith/AI-Job-Agent/blob/main/docs/screenshot/Application%20Tracker%20-%20Update%20.png?raw=true)
+![Tracker page](https://github.com/varshapsujith/AI-Job-Agent/blob/main/docs/screenshot/Application%20Tracker%20-%20Pipeline.png?raw=true)
+![Tracker page](https://github.com/varshapsujith/AI-Job-Agent/blob/main/docs/screenshot/Application%20Tracker%20-%20Funnel.png?raw=true)
 
 ## How it works
 
