@@ -4,8 +4,8 @@ A Streamlit app that scores how well a CV fits one or many job descriptions usin
 
 <!-- Live demo: add the link here after deployment -->
 
-![Results page](https://github.com/varshapsujith/AI-Job-Agent/blob/main/docs/screenshot/Analytics%20-%20By%20Score.png?raw=true)
-![Results page](https://github.com/varshapsujith/AI-Job-Agent/blob/main/docs/screenshot/Analytics%20-%20By%20Skill.png?raw=true)
+![Results page](https://github.com/varshapsujith/AI-Job-Agent/blob/main/docs/screenshot/CV%20Job%20Matcher%20Results%201.png?raw=true)
+![Results page](https://github.com/varshapsujith/AI-Job-Agent/blob/main/docs/screenshot/CV%20Job%20Matcher%20Results%202.png?raw=true)
 
 ## Why I built it
 
@@ -34,7 +34,9 @@ Applying to data analyst roles means reading dozens of job descriptions and gues
 - Status per job: Saved, Applied, Interview, Offer, Rejected, with dates and notes
 - Funnel, weekly activity chart and average match score by status
 
-![Analytics page](docs/screenshots/analytics.png)
+![Analytics page](https://github.com/varshapsujith/AI-Job-Agent/blob/main/docs/screenshot/Application%20Tracker%20-%20Update%20.png?raw=true)
+![Analytics page](https://github.com/varshapsujith/AI-Job-Agent/blob/main/docs/screenshot/Application%20Tracker%20-%20Pipeline.png?raw=true)
+![Analytics page](https://github.com/varshapsujith/AI-Job-Agent/blob/main/docs/screenshot/Application%20Tracker%20-%20Funnel.png?raw=true)
 
 ## How it works
 
