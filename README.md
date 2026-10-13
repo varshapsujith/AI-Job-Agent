@@ -4,7 +4,7 @@ A Streamlit app that scores how well a CV fits one or many job descriptions usin
 
 <!-- Live demo: add the link here after deployment -->
 
-![Results page](docs/screenshots/results.png)
+![Results page](https://github.com/varshapsujith/AI-Job-Agent/blob/main/docs/screenshot/Analytics%20-%20By%20Score)
 
 ## Why I built it
 
