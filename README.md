@@ -180,7 +180,7 @@ copy .env.example .env        # macOS/Linux: cp .env.example .env
 python -m streamlit run App.py
 ```
 
-Then open http://localhost:8501.
+Then open [http://localhost:8501.](https://ai-job-agent-a77emfjfzgegbf3zwzugb3.streamlit.app/)
 
 **Using it**
 1. Upload your CV and one or more job descriptions in the sidebar
